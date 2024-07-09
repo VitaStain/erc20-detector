@@ -24,7 +24,9 @@ class Contract(Base):
         ForeignKey(
             "standards.id",
             ondelete="CASCADE",
-        )
+        ),
+        nullable=True,
+        default=None,
     )
     standard: Mapped["Standard"] = relationship(
         back_populates="contracts",
