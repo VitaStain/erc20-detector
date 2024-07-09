@@ -1,0 +1,42 @@
+{
+  "standard": [
+    {
+      "id": 1,
+      "name": "ERC-20",
+      "functions": [
+        {
+          "id": 1,
+          "name": "function totalSupply"
+        },
+        {
+          "id": 2,
+          "name": "function balanceOf"
+        },
+        {
+          "id": 3,
+          "name": "function transfer"
+        },
+        {
+          "id": 4,
+          "name": "function transferFrom"
+        },
+        {
+          "id": 5,
+          "name": "function approve"
+        },
+        {
+          "id": 6,
+          "name": "function allowance"
+        },
+        {
+          "id": 7,
+          "name": "event Transfer"
+        },
+        {
+          "id": 8,
+          "name": "event Approval"
+        }
+      ]
+    }
+  ]
+}
