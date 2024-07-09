@@ -10,6 +10,7 @@ class StandardService:
         self,
         standard_schema: StandardSchema,
     ):
+        """Add standard data to database"""
         async with self.uow:
             await self.uow.standards.validate_is_exist(standard_schema.name)
             standard = await self.uow.standards.add_one(
@@ -30,6 +31,7 @@ class StandardService:
         self,
         standard_name: str,
     ):
+        """Delete standard from database by name"""
         async with self.uow:
             standard = await self.uow.standards.get_by_name(name=standard_name)
             await self.uow.standards.delete_many(id=standard.id)
@@ -38,9 +40,11 @@ class StandardService:
         self,
         standard_name: str,
     ):
+        """Get standard by name from database"""
         async with self.uow:
             return await self.uow.standards.get_by_name(name=standard_name)
 
     async def find_all(self):
+        """Get all standard from database"""
         async with self.uow:
             return await self.uow.standards.find_all()

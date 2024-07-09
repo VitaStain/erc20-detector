@@ -13,11 +13,13 @@ class StandardRepository(SQLAlchemyRepository):
     model = Standard
 
     async def validate_is_exist(self, name: str):
+        """Check if standard with this name already exists"""
         if await self.find_one(name=name):
             msg = f"Standard '{name}' already exists"
             raise HTTP400Exception(msg)
 
     async def get_by_name(self, name: str):
+        """Get standards from database by name with join function model"""
         stmt = (
             select(self.model)
             .options(joinedload(self.model.functions))
@@ -31,6 +33,7 @@ class StandardRepository(SQLAlchemyRepository):
         return res
 
     async def find_all(self, **filter_by):
+        """Get all standards from database with join function model"""
         stmt = (
             select(self.model)
             .options(joinedload(self.model.functions))
