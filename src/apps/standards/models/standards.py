@@ -13,14 +13,13 @@ if TYPE_CHECKING:
 class Standard(Base):
     __tablename__ = "standards"
 
-    name: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(100), unique=True)
     contracts: Mapped[List["Contract"]] = relationship(
-        secondary="standard__contract",
-        back_populates="standards",
+        back_populates="standard",
     )
     functions: Mapped[List["Function"]] = relationship(
-        secondary="function__contract",
-        back_populates="standards",
+        secondary="function__standard",
+        back_populates="standard",
     )
 
 
