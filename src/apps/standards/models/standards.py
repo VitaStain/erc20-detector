@@ -23,23 +23,6 @@ class Standard(Base):
     )
 
 
-class ContractStandardSecondary(Base):
-    __tablename__ = "contract__standard"
-
-    contract_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "contracts.id",
-            ondelete="CASCADE",
-        ),
-    )
-    standard_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "standards.id",
-            ondelete="CASCADE",
-        ),
-    )
-
-
 class FunctionStandardSecondary(Base):
     __tablename__ = "function__standard"
 
