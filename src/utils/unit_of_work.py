@@ -5,7 +5,10 @@ from fastapi import Depends
 
 from src.apps.contracts.repositories.contracts import ContractRepository
 from src.apps.standards.repositories.functions import FunctionRepository
-from src.apps.standards.repositories.standards import StandardRepository
+from src.apps.standards.repositories.standards import (
+    StandardRepository,
+    FunctionStandardSecondaryRepository,
+)
 from src.utils.dependencies.get_db_session import get_db_session
 
 
@@ -15,6 +18,7 @@ class IUnitOfWork(ABC):
     # standards
     functions = Type[FunctionRepository]
     standards = Type[StandardRepository]
+    function__standard = Type[FunctionStandardSecondaryRepository]
 
     @abstractmethod
     def __init__(self): ...
@@ -45,6 +49,7 @@ class UnitOfWork(IUnitOfWork):
         # standards
         self.functions = FunctionRepository(self.session)
         self.standards = StandardRepository(self.session)
+        self.function__standard = FunctionStandardSecondaryRepository(self.session)
         return self
 
     async def __aexit__(self, *args):
