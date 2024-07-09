@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends
 
 from src.apps.contracts.schemas.contracts import ContractAddressSchema, ContractSchema
@@ -16,3 +18,26 @@ async def add_contact(
     contract_service: ContractService = Depends(),
 ):
     return await contract_service.add_one(contract)
+
+
+@router.get(
+    "/{id}",
+    response_model=ContractSchema,
+    name="get_contract",
+)
+async def get_contact(
+    contract_id: int,
+    contract_service: ContractService = Depends(),
+):
+    return await contract_service.get_by_id(contract_id)
+
+
+@router.get(
+    "/",
+    response_model=List[ContractSchema],
+    name="get_contracts",
+)
+async def get_contacts(
+    contract_service: ContractService = Depends(),
+):
+    return await contract_service.find_all()

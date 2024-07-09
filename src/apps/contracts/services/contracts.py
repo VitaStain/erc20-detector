@@ -1,7 +1,7 @@
 from src.apps.contracts.schemas.contracts import ContractAddressSchema
 from src.apps.contracts.utils.scanner import scanner
 from src.utils.dependencies.unit_of_work import UOWDep
-from src.utils.exceptions import HTTP400Exception
+from src.utils.exceptions import HTTP400Exception, HTTP404Exception
 
 
 class ContractService:
@@ -29,3 +29,18 @@ class ContractService:
             )
 
         return contract
+
+    async def get_by_id(self, contract_id: int):
+        """Get contract by id from database"""
+        async with self.uow:
+            contract = await self.uow.contracts.get_by_id(contract_id)
+            if not contract:
+                msg = f"Contract doesn't exist"
+                raise HTTP404Exception(msg)
+        return contract
+
+    async def find_all(self, **filter_by):
+        """Get all contracts from database"""
+        async with self.uow:
+            res = await self.uow.contracts.find_all(*filter_by)
+        return res
