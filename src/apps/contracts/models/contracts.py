@@ -15,7 +15,7 @@ class Contract(Base):
 
     contract_address: Mapped[str] = mapped_column(String(50), unique=True)
     source_code: Mapped[str] = mapped_column(Text)
-    is_erc20: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_erc20: Mapped[bool] = mapped_column(Boolean, default=None, nullable=True)
     erc20_version: Mapped[str] = mapped_column(String(50), default=None, nullable=True)
     status: Mapped[ContractStatus] = mapped_column(
         String(20), default=ContractStatus.WAIT_PROCESSING

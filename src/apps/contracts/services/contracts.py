@@ -13,12 +13,14 @@ class ContractService:
         contract: ContractAddressSchema,
     ):
         """Add contract data to database"""
-        url = scanner.get_url_for_get_contract_code(contract.contract_address)
-        source_code = await scanner.get_contract_code(url)
-        if not source_code:
-            msg = f"Error during getting source code contract"
-            raise HTTP400Exception(msg)
+
         async with self.uow:
+            await self.uow.contracts.validate_is_exist(contract.contract_address)
+            url = scanner.get_url_for_get_contract_code(contract.contract_address)
+            source_code = await scanner.get_contract_code(url)
+            if not source_code:
+                msg = f"Error during getting source code contract"
+                raise HTTP400Exception(msg)
             contract = await self.uow.contracts.add_one(
                 data={
                     "contract_address": contract.contract_address,
