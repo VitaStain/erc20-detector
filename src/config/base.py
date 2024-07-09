@@ -2,6 +2,7 @@ from pydantic import Extra
 from pydantic_settings import BaseSettings
 
 from src.config.database import DataBaseSettings, DatabaseHelper
+from src.config.etherscan import EtherscanSettings
 
 
 class Settings(BaseSettings):
@@ -18,6 +19,7 @@ class Settings(BaseSettings):
     debug: bool = False
 
     db: DataBaseSettings
+    etherscan: EtherscanSettings
 
 
 settings = Settings()

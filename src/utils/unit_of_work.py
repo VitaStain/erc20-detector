@@ -14,7 +14,7 @@ from src.utils.dependencies.get_db_session import get_db_session
 
 class IUnitOfWork(ABC):
     # contracts
-    contract: Type[ContractRepository]
+    contracts: Type[ContractRepository]
     # standards
     functions = Type[FunctionRepository]
     standards = Type[StandardRepository]
@@ -45,7 +45,7 @@ class UnitOfWork(IUnitOfWork):
 
     async def __aenter__(self):
         # contracts
-        self.accounts = ContractRepository(self.session)
+        self.contracts = ContractRepository(self.session)
         # standards
         self.functions = FunctionRepository(self.session)
         self.standards = StandardRepository(self.session)
