@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "erc20-detector"
+version = "0.1.0"
+description = ""
+authors = ["vitaly <vitalikstain@inbox.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["all"], version = "^0.111.0"}
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.31"}
+alembic = "^1.13.2"
+pydantic = "^2.8.2"
+asyncpg = "^0.29.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

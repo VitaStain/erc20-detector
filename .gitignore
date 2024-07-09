@@ -1,0 +1,23 @@
+# CACHE
+**/.DS_Store
+**/__pycache__
+**/.ruff_cache
+
+# DATA
+**/.data
+data
+**/media
+**/static
+**/**.sql
+
+# GIT
+**/.git
+
+# IDE
+**/.vs
+**/.vscode
+**/.idea
+
+# ENV
+**/.venv
+**/.env

@@ -1,0 +1,11 @@
+services:
+
+  api:
+    volumes:
+      - .:/app
+    environment:
+      DB__HOST: db
+      DB__PORT: 5432
+  db:
+    ports:
+      - ${DB_PORTS}

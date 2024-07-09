@@ -1,0 +1,43 @@
+x-default: &default
+  restart: unless-stopped
+  env_file: .env
+
+services:
+  api:
+    <<: *default
+    image: ${IMAGE_NAME:-$COMPOSE_PROJECT_NAME}:${IMAGE_TAG:-latest}
+    container_name: ${COMPOSE_PROJECT_NAME}-api
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+      args:
+        POETRY_VERSION: ${POETRY_VERSION}
+    entrypoint: ./docker/entrypoint.sh
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://api:8000" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - ${API_PORTS}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    <<: *default
+    container_name: ${COMPOSE_PROJECT_NAME}-db
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ${DB__NAME}
+      POSTGRES_USER: ${DB__USER}
+      POSTGRES_PASSWORD: ${DB__PASSWORD}
+    ports:
+      - ${DB_PORTS}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d ${DB__NAME} -U ${DB__USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - $COMPOSE_VOLUMES_PATH/db:/var/lib/postgresql/data
