@@ -25,3 +25,22 @@ class StandardService:
                 ]
             )
             return standard
+
+    async def delete_one(
+        self,
+        standard_name: str,
+    ):
+        async with self.uow:
+            standard = await self.uow.standards.get_by_name(name=standard_name)
+            await self.uow.standards.delete_many(id=standard.id)
+
+    async def get_by_name(
+        self,
+        standard_name: str,
+    ):
+        async with self.uow:
+            return await self.uow.standards.get_by_name(name=standard_name)
+
+    async def find_all(self):
+        async with self.uow:
+            return await self.uow.standards.find_all()
