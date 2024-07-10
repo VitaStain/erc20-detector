@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings
 
 from src.config.database import DataBaseSettings, DatabaseHelper
 from src.config.etherscan import EtherscanSettings
+from src.config.rabbitmq import RabbitmqSettings
 
 
 class Settings(BaseSettings):
@@ -20,6 +21,7 @@ class Settings(BaseSettings):
 
     db: DataBaseSettings
     etherscan: EtherscanSettings
+    rabbitmq: RabbitmqSettings
 
 
 settings = Settings()

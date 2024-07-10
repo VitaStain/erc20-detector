@@ -23,7 +23,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
+      rabbitmq:
+        condition: service_healthy
   db:
     <<: *default
     container_name: ${COMPOSE_PROJECT_NAME}-db
@@ -41,3 +42,26 @@ services:
       retries: 5
     volumes:
       - $COMPOSE_VOLUMES_PATH/db:/var/lib/postgresql/data
+  taskiq:
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    command: taskiq worker --workers ${TASK_IQ_WORKERS} src.config.tkq:broker
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+  rabbitmq:
+    <<: *default
+    container_name: ${COMPOSE_PROJECT_NAME}-rabbit
+    image: rabbitmq:alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ__USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ__PASSWORD}
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 5s
+      retries: 3
