@@ -22,6 +22,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
+    connection = op.get_bind()
     path = "alembic/fixtures/standards.json"
     standards_table = Table("standards", Base.metadata)
     functions_table = Table("functions", Base.metadata)
@@ -30,13 +31,27 @@ def upgrade() -> None:
         data = json.load(file)
     for standard_data in data["standard"]:
         functions = standard_data.pop("functions")
-        op.bulk_insert(standards_table, [standard_data])
-        op.bulk_insert(functions_table, functions)
+        insert_standard_query = (
+            standards_table.insert()
+            .values(standard_data)
+            .returning(standards_table.c.id)
+        )
+        standard_id = connection.execute(insert_standard_query).scalar()
+        inserted_function_ids = []
+        for function in functions:
+            insert_function_query = (
+                functions_table.insert()
+                .values(name=function["name"])
+                .returning(functions_table.c.id)
+            )
+            function_id = connection.execute(insert_function_query).scalar()
+            inserted_function_ids.append(function_id)
+
         op.bulk_insert(
             function__standard_table,
             rows=[
-                {"standard_id": standard_data["id"], "function_id": function["id"]}
-                for function in functions
+                {"standard_id": standard_id, "function_id": function}
+                for function in inserted_function_ids
             ],
         )
 

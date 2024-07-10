@@ -1,39 +1,30 @@
 {
   "standard": [
     {
-      "id": 1,
       "name": "ERC-20",
       "functions": [
         {
-          "id": 1,
           "name": "totalSupply"
         },
         {
-          "id": 2,
           "name": "balanceOf"
         },
         {
-          "id": 3,
           "name": "transfer"
         },
         {
-          "id": 4,
           "name": "transferFrom"
         },
         {
-          "id": 5,
           "name": "approve"
         },
         {
-          "id": 6,
           "name": "allowance"
         },
         {
-          "id": 7,
           "name": "Transfer"
         },
         {
-          "id": 8,
           "name": "Approval"
         }
       ]
