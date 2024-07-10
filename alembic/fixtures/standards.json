@@ -6,35 +6,35 @@
       "functions": [
         {
           "id": 1,
-          "name": "function totalSupply"
+          "name": "totalSupply"
         },
         {
           "id": 2,
-          "name": "function balanceOf"
+          "name": "balanceOf"
         },
         {
           "id": 3,
-          "name": "function transfer"
+          "name": "transfer"
         },
         {
           "id": 4,
-          "name": "function transferFrom"
+          "name": "transferFrom"
         },
         {
           "id": 5,
-          "name": "function approve"
+          "name": "approve"
         },
         {
           "id": 6,
-          "name": "function allowance"
+          "name": "allowance"
         },
         {
           "id": 7,
-          "name": "event Transfer"
+          "name": "Transfer"
         },
         {
           "id": 8,
-          "name": "event Approval"
+          "name": "Approval"
         }
       ]
     }
