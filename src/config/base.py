@@ -21,6 +21,10 @@ class Settings(BaseSettings):
 
     erc20_standard_name: str = "ERC-20"
 
+    extensions_repo_owner: str = "OpenZeppelin"
+    extensions_repo_name: str = "openzeppelin-contracts"
+    extensions_directory: str = "contracts/token/ERC20/extensions"
+
     db: DataBaseSettings
     etherscan: EtherscanSettings
     rabbitmq: RabbitmqSettings

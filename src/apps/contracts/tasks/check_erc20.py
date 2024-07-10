@@ -5,7 +5,7 @@ from taskiq import TaskiqDepends
 from src.apps.contracts.services.contracts import ContractService
 from src.apps.contracts.utils.check_source_code import check_source_code
 from src.apps.standards.services.standards import StandardService
-from src.apps.urils.constants import ContractStatus
+from src.apps.standards.utils.constants import ContractStatus
 from src.config.base import settings
 from src.config.tkq import broker
 from src.utils.exceptions import HTTP404Exception

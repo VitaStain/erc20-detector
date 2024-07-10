@@ -8,6 +8,7 @@ from src.models import Base
 if TYPE_CHECKING:
     from src.apps.contracts.models.contracts import Contract
     from src.apps.standards.models.functions import Function
+    from src.apps.standards.models.extensions import Extension
 
 
 class Standard(Base):
@@ -15,6 +16,9 @@ class Standard(Base):
 
     name: Mapped[str] = mapped_column(String(100), unique=True)
     contracts: Mapped[List["Contract"]] = relationship(
+        back_populates="standard",
+    )
+    extensions: Mapped[List["Extension"]] = relationship(
         back_populates="standard",
     )
     functions: Mapped[List["Function"]] = relationship(
