@@ -162,13 +162,15 @@ default value:
 }
 ```
 
+⚠️ (WITHOUT PUSH THIS ENDPOINT "erc20_version" NOT BE SET)
+
 ### 3. Contracts
 
 #### 3.1 GET /api/v1/contracts/ - Get all the contracts from database
 
 #### 3.2 POST /api/v1/contracts/ - Add contract to database (Get source code from ETHERSCAN)
 
-(REQUIRED ETHERSCAN__API_KEY var)
+⚠️(REQUIRED "ETHERSCAN__API_KEY" in .env)
 
 #### 3.3 GET /api/v1/contracts/{contract_id} - Get the contract from database by id
 
