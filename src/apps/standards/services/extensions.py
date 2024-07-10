@@ -1,3 +1,5 @@
+from typing import Sequence
+
 from src.apps.standards.models.extensions import Extension
 from src.apps.standards.schemas.extensions import ExtensionsSchema
 from src.utils.dependencies.unit_of_work import UOWDep
@@ -34,3 +36,8 @@ class ExtensionService:
                     ]
                 )
             return extension
+
+    async def find_all(self, standard_id: int) -> Sequence[Extension]:
+        """Find all extensions from database"""
+        async with self.uow:
+            return await self.uow.extensions.find_all(standard_id=standard_id)
