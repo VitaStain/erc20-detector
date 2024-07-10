@@ -1,8 +1,22 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from src.apps.routers import api_router
 from src.config.base import settings
+from src.config.tkq import broker
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    if not broker.is_worker_process:
+        await broker.startup()
+
+    yield
+
+    if not broker.is_worker_process:
+        await broker.shutdown()
 
 
 def get_app() -> FastAPI:
@@ -17,6 +31,7 @@ def get_app() -> FastAPI:
             "persistAuthorization": True,
         },
         debug=settings.debug,
+        lifespan=lifespan,
     )
 
     app.include_router(router=api_router, prefix="/api")

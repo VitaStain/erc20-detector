@@ -3,6 +3,7 @@ from pydantic_settings import BaseSettings
 
 from src.config.database import DataBaseSettings, DatabaseHelper
 from src.config.etherscan import EtherscanSettings
+from src.config.rabbitmq import RabbitmqSettings
 
 
 class Settings(BaseSettings):
@@ -18,8 +19,11 @@ class Settings(BaseSettings):
     reload: bool = False
     debug: bool = False
 
+    erc20_standard_name: str = "ERC-20"
+
     db: DataBaseSettings
     etherscan: EtherscanSettings
+    rabbitmq: RabbitmqSettings
 
 
 settings = Settings()
