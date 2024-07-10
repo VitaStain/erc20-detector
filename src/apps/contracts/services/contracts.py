@@ -3,7 +3,7 @@ from typing import Sequence
 from src.apps.contracts.models.contracts import Contract
 from src.apps.contracts.schemas.contracts import ContractAddressSchema
 from src.apps.contracts.utils.scanner import scanner
-from src.apps.urils.constants import ContractStatus
+from src.apps.standards.utils.constants import ContractStatus
 from src.utils.dependencies.unit_of_work import UOWDep
 from src.utils.exceptions import HTTP400Exception, HTTP404Exception
 

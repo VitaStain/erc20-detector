@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import String, Text, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.apps.urils.constants import ContractStatus
+from src.apps.standards.utils.constants import ContractStatus
 from src.models import Base
 
 if TYPE_CHECKING:
