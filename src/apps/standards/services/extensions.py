@@ -1,3 +1,4 @@
+from src.apps.standards.models.extensions import Extension
 from src.apps.standards.schemas.extensions import ExtensionsSchema
 from src.utils.dependencies.unit_of_work import UOWDep
 
@@ -9,7 +10,8 @@ class ExtensionService:
     async def add_one(
         self,
         extension_schema: ExtensionsSchema,
-    ):
+    ) -> Extension:
+        """Add extension to database"""
         async with self.uow:
             extension = await self.uow.extensions.get_by_name(extension_schema.name)
             if not extension:
