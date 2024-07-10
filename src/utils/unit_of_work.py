@@ -4,6 +4,10 @@ from typing import Type
 from fastapi import Depends
 
 from src.apps.contracts.repositories.contracts import ContractRepository
+from src.apps.standards.repositories.extensions import (
+    ExtensionRepository,
+    FunctionExtensionSecondaryRepository,
+)
 from src.apps.standards.repositories.functions import FunctionRepository
 from src.apps.standards.repositories.standards import (
     StandardRepository,
@@ -19,6 +23,8 @@ class IUnitOfWork(ABC):
     functions = Type[FunctionRepository]
     standards = Type[StandardRepository]
     function__standard = Type[FunctionStandardSecondaryRepository]
+    extensions = Type[ExtensionRepository]
+    function__extension = Type[FunctionExtensionSecondaryRepository]
 
     @abstractmethod
     def __init__(self): ...
@@ -50,6 +56,8 @@ class UnitOfWork(IUnitOfWork):
         self.functions = FunctionRepository(self.session)
         self.standards = StandardRepository(self.session)
         self.function__standard = FunctionStandardSecondaryRepository(self.session)
+        self.extensions = ExtensionRepository(self.session)
+        self.function__extension = FunctionExtensionSecondaryRepository(self.session)
         return self
 
     async def __aexit__(self, *args):
