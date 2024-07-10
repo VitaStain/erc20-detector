@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     reload: bool = False
     debug: bool = False
 
+    erc20_standard_name: str = "ERC-20"
+
     db: DataBaseSettings
     etherscan: EtherscanSettings
     rabbitmq: RabbitmqSettings

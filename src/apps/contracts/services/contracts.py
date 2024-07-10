@@ -1,5 +1,9 @@
+from typing import Sequence
+
+from src.apps.contracts.models.contracts import Contract
 from src.apps.contracts.schemas.contracts import ContractAddressSchema
 from src.apps.contracts.utils.scanner import scanner
+from src.apps.urils.constants import ContractStatus
 from src.utils.dependencies.unit_of_work import UOWDep
 from src.utils.exceptions import HTTP400Exception, HTTP404Exception
 
@@ -11,7 +15,7 @@ class ContractService:
     async def add_one(
         self,
         contract: ContractAddressSchema,
-    ):
+    ) -> Contract:
         """Add contract data to database"""
 
         async with self.uow:
@@ -30,7 +34,7 @@ class ContractService:
 
         return contract
 
-    async def get_by_id(self, contract_id: int):
+    async def get_by_id(self, contract_id: int) -> Contract:
         """Get contract by id from database"""
         async with self.uow:
             contract = await self.uow.contracts.get_by_id(contract_id)
@@ -39,8 +43,21 @@ class ContractService:
                 raise HTTP404Exception(msg)
         return contract
 
-    async def find_all(self, **filter_by):
+    async def find_all(self, **filter_by) -> Sequence[Contract]:
         """Get all contracts from database"""
         async with self.uow:
             res = await self.uow.contracts.find_all(*filter_by)
         return res
+
+    async def find_not_checked_contracts(self) -> Sequence[Contract]:
+        """Find not checked contracts from database"""
+        async with self.uow:
+            res = await self.uow.contracts.find_all(
+                standard_id=None, status=ContractStatus.WAIT_PROCESSING
+            )
+        return res
+
+    async def edit_one(self, id: int, data: dict) -> Contract:
+        """Edit contact to database"""
+        async with self.uow:
+            return await self.uow.contracts.edit_one(id, data)
