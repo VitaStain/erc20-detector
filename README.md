@@ -60,13 +60,13 @@ ERC-20 detector API is a Python backend service for checking contract and set st
    poetry install
    ```
 
-#### 3. Apply database migrations
+#### 3. Start postgresql and create database
+
+#### 4. Apply database migrations
 
    ```bash
    alembic upgrade head
    ```
-
-#### 4. Start postgresql and create database
 
 #### 5. Run api:
 
@@ -74,7 +74,9 @@ ERC-20 detector API is a Python backend service for checking contract and set st
    python -m src
    ```
 
-#### 6. Run taskiq:
+#### 6. Start rabbitmq
+
+#### 7. Run taskiq:
 
    ```bash
    taskiq worker --workers 2 src.config.tkq:broker
